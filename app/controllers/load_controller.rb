@@ -14,6 +14,9 @@ class LoadController < ActionController::API
     rescue Timeout::Error
       # ignored
     end
-    render json: {duration: duration}
+
+    Event.create(title: 'load simulation', details: {duration: duration}).tap do |event|
+      render json: event
+    end
   end
 end
